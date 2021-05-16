@@ -1,0 +1,50 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+}
+
+header {
+  display: flex;
+  flex-direction: column;
+  min-height: 30vh;
+  justify-content: center;
+  align-items: center;
+}
+
+header h2 {
+  padding: 2rem;
+}
+
+header #logo {
+  padding: 2rem;
+  text-decoration: none;
+  color: black;
+}
+
+header .search-form {
+  display: flex;
+  padding: 2rem;
+}
+
+header .search-form input {
+  font-size: 2rem;
+  padding: 0.5rem;
+  width: 100%;
+  border: none;
+  border: 2px solid #1c4e99;
+}
+
+header .search-form button {
+  border: none;
+  padding: 0.5rem;
+  font-size: 1rem;
+  background-color: #1c4e99;
+  color: white;
+  cursor: pointer;
+}
+/*# sourceMappingURL=style.css.map */
