@@ -1,26 +1,3 @@
-// const auth = "563492ad6f91700001000001e19bb36bf4e743c6ab90e897851c0573"; //no backend thats why it`s open
-// const gallery = document.querySelector(".gallery");
-// const searchInput = document.querySelector(".search-input");
-// const submitBtn = document.querySelector(".submit-button");
-// let searchValue = null;
-
-// async function curatedPhotos() {
-//   const dataFetch = await fetch(
-//     "https://api.pexels.com/v1/curated?per_page=15",
-//     {
-//       method: "GET",
-//       headers: {
-//         Accept: "application/json",
-//         Authorization: auth,
-//       },
-//     }
-//   );
-
-//   const data = await dataFetch.json();
-//   console.log(data.photos);
-// }
-
-// curatedPhotos();
 
 class Photon {
   constructor() {
@@ -43,31 +20,48 @@ class Photon {
         Authorization: this.auth,
       },
     });
-    return await dataFetch.json();
+
+    if(dataFetch.status){
+      return await dataFetch.json();
+    }else{
+      alert('No responce from Server :(')
+    }
   };
 
   renderStartPictures = async () => {
+    
     const data = await this.getApiData(
       "https://api.pexels.com/v1/curated?page=1&per_page=15"
     );
     data.photos.forEach((element) => {
+      console.log(element);
       this.gallery.insertAdjacentHTML(
         "beforeend",
         this.getTempalte({
           src: element.src.large,
           name: element.photographer,
           link: element.src.original,
+          small: element.src.small,
+          large: element.src.large,
+          big: element.src.medium
         })
       );
     });
   };
 
-  getTempalte = ({ src, name, link }) => {
+  getTempalte = ({ src, name, link,small,large,big }) => {
     return `
       <div class="gallery-img">
         <div class='gallery-info'>
           <p>${name}</p>
           <a href=${link} target='_blank'>Download</a>
+        </div>
+        <div class="gallery-download">
+          <span>Download</span>
+          <a href='${big}' target='_blank'>Big</a>
+          <a href='${small}' target='_blank'>Small</a>
+          <a href='${large}' target='_blank'>Large</a>
+          <a href='${link}' target='_blank'>Origin</a>
         </div>
         <img src="${src}" alt="">
       </div>
@@ -85,7 +79,7 @@ class Photon {
     this.searchValue = document.querySelector(".search-input").value;
     
     if(this.searchValue == ''){
-      alert('please put c orrect request')
+      alert('please put correct request')
       return
     }
     const data = await this.getApiData(
@@ -93,12 +87,16 @@ class Photon {
     );
     this.clear();
     data.photos.forEach((element) => {
+      
       this.gallery.insertAdjacentHTML(
         "beforeend",
         this.getTempalte({
           src: element.src.large,
           name: element.photographer,
           link: element.src.original,
+          small: element.src.small,
+          large: element.src.large,
+          big: element.src.medium,
         })
       );
     });
